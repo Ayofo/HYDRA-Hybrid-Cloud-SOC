@@ -84,6 +84,55 @@ rule 100100, generating a Level 10 security alert.
 
 ![HYDRA Custom Detection](screenshots/hydra-detection-002.png)
 
+
+
+## System Architecture
+
+
+
+flowchart TB
+    subgraph AZ["Microsoft Azure — West US 2"]
+        WIN["Windows Server 2022<br/>vm-hydra-win01"]
+        LOG["Windows Security Event Logs<br/>Event ID 4625"]
+        AGENT["Wazuh Windows Agent"]
+
+        WIN --> LOG
+        LOG --> AGENT
+    end
+
+    subgraph NET["Private Network — Tailscale"]
+        TS["Encrypted Tailscale Connection<br/>TCP 1514: Agent Events<br/>TCP 1515: Enrollment"]
+    end
+
+    subgraph LOCAL["Local Infrastructure — VirtualBox"]
+        subgraph UB["Ubuntu Linux VM"]
+            MGR["Wazuh Manager<br/>Event Collection and Analysis"]
+            RULE["Detection Engineering<br/>Rule 60122: Failed Login<br/>Rule 100100: 5 Failures / 120s"]
+            IDX["Wazuh Indexer<br/>Alert Storage"]
+            DASH["Wazuh Dashboard<br/>Threat Hunting and Investigation"]
+
+            MGR --> RULE
+            RULE --> IDX
+            IDX --> DASH
+        end
+    end
+
+    AGENT --> TS
+    TS --> MGR
+
+    ANALYST["Security Analyst<br/>Windows Browser"]
+    ANALYST <-->|"HTTPS over Tailscale"| DASH
+
+    classDef azure fill:#e8f2ff,stroke:#3273c8,color:#173b70
+    classDef network fill:#f0e9ff,stroke:#8256c7,color:#442675
+    classDef security fill:#e5f5ed,stroke:#23865b,color:#14543a
+    classDef analyst fill:#fff0df,stroke:#c88a36,color:#70420d
+
+    class WIN,LOG,AGENT azure
+    class TS network
+    class MGR,RULE,IDX,DASH security
+    class ANALYST analyst
+
 ## Security Considerations
 
 - Restricted public inbound access to the Azure Windows virtual machine.
