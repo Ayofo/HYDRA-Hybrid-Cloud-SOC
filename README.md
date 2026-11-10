@@ -67,6 +67,23 @@ Executed five controlled failed authentication attempts and confirmed that the c
 | Standard authentication alert | Wazuh rule 60122 triggered | Passed |
 | Repeated failed logins | Custom rule 100100 triggered | Passed |
 
+
+## Detection Evidence
+
+### Detection 001 — Windows Authentication Failure
+
+A controlled failed login on Azure Windows Server generated
+Security Event ID 4625 and triggered Wazuh rule 60122.
+
+![Windows Event ID 4625](hydra-detection-001.png)
+
+### Detection 002 — Custom Authentication Correlation
+
+Five failed authentication attempts triggered custom Wazuh
+rule 100100, generating a Level 10 security alert.
+
+![HYDRA Custom Detection](hydra-detection-002.png)
+
 ## Security Considerations
 
 - Restricted public inbound access to the Azure Windows virtual machine.
