@@ -140,6 +140,12 @@ flowchart TB
 - Used controlled authentication tests rather than targeting real user accounts.
 - Avoided publishing passwords, authentication keys, and administrative credentials.
 
+
+## Azure Deployment Evidence
+
+![Azure Windows Server Deployment](screenshots/azure-vm-overview.png)
+
+
 ## Limitations and Future Improvements
 
 The custom rule counts matching authentication failures within a specified time window. It does not currently correlate attempts by individual username or source IP.
