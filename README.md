@@ -89,7 +89,7 @@ rule 100100, generating a Level 10 security alert.
 ## System Architecture
 
 
-
+```mermaid
 flowchart TB
     subgraph AZ["Microsoft Azure — West US 2"]
         WIN["Windows Server 2022<br/>vm-hydra-win01"]
@@ -132,7 +132,6 @@ flowchart TB
     class TS network
     class MGR,RULE,IDX,DASH security
     class ANALYST analyst
-
 ## Security Considerations
 
 - Restricted public inbound access to the Azure Windows virtual machine.
