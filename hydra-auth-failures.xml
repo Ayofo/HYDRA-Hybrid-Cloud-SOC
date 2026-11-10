@@ -1,0 +1,9 @@
+
+<!-- HYDRA: Repeated Windows authentication failures -->
+<group name="hydra,windows,authentication_failed,">
+  <rule id="100100" level="10" frequency="5" timeframe="120">
+    <if_matched_sid>60122</if_matched_sid>
+    <description>HYDRA: Five Windows authentication failures within 120 seconds</description>
+    <group>authentication_failures,</group>
+  </rule>
+</group>
